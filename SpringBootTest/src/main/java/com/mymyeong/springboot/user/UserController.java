@@ -3,6 +3,9 @@ package com.mymyeong.springboot.user;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,9 +21,19 @@ public class UserController {
 		return service.findAll();
 	}
 
-	@GetMapping("/users/{id}")
-	public User retrieveUser(int id) {
-		return service.findOne(id);
+	@GetMapping("/user/{id}")
+	public User retrieveUser(@PathVariable int id) {
+		User temp = service.findOne(id);
+		if (temp == null) {
+			throw new UserNotFoundException(String.format("USER ID [%s] NOT Found", id));
+		} else {
+			return temp;
+		}
+	}
+
+	@PostMapping("/user")
+	public User newUser(@RequestBody User user) {
+		return service.save(user);
 	}
 
 }

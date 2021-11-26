@@ -24,6 +24,7 @@ public class UserDaoService {
 	public User save(User user) {
 		int id = users.stream().max(Comparator.comparingInt(User::getId)).get().getId() + 1;
 		user.setId(id);
+		user.setJoinDate(new Date());
 		users.add(user);
 
 		return user;
