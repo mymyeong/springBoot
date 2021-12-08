@@ -5,7 +5,10 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.json.MappingJacksonValue;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,6 +17,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 @RestController
 public class UserController {
@@ -29,12 +34,24 @@ public class UserController {
 	}
 
 	@GetMapping("/user/{id}")
-	public User retrieveUser(@PathVariable int id) {
+	public ResponseEntity<EntityModel<User>> retrieveUser(@PathVariable int id) {
 		User temp = service.findOne(id);
 		if (temp == null) {
 			throw new UserNotFoundException(String.format("USER ID [%s] NOT Found", id));
 		} else {
-			return temp;
+//			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "joinDate", "ssn");
+//			FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+//
+//			MappingJacksonValue mapping = new MappingJacksonValue(temp);
+//			mapping.setFilters(filters);
+//
+//			return mapping;
+
+			EntityModel<User> model = EntityModel.of(temp);
+			WebMvcLinkBuilder linkTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+			model.add(linkTo.withRel("all-users"));
+
+			return ResponseEntity.ok(model);
 		}
 	}
 

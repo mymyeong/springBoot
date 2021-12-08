@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 //@JsonIgnoreProperties(value = { "passwd" })
-@JsonFilter("UserInfo")
+//@JsonFilter("UserInfo")
 public class User {
 	private Integer id;
 

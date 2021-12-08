@@ -45,8 +45,7 @@ public class AdminUserController {
 		if (temp == null) {
 			throw new UserNotFoundException(String.format("USER ID [%s] NOT Found", id));
 		} else {
-			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter//
-					.filterOutAllExcept("id", "name", "joinDate", "ssn");
+			SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter.filterOutAllExcept("id", "name", "joinDate", "ssn");
 			FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
 
 			MappingJacksonValue mapping = new MappingJacksonValue(temp);
