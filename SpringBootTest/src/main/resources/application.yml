@@ -5,3 +5,13 @@ server:
 spring:
   messages:
     basename: messages
+
+springfox:
+  documentation:
+    auto-startup: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
