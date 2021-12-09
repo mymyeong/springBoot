@@ -5,6 +5,10 @@ server:
 spring:
   messages:
     basename: messages
+  security:
+    user:
+      name: mymyeong
+      password: auto159
 
 springfox:
   documentation:
