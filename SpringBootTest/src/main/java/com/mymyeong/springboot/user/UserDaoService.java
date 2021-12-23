@@ -11,11 +11,11 @@ import org.springframework.stereotype.Service;
 public class UserDaoService {
 	private static List<User> users = new ArrayList<>();
 
-	static {
-		users.add(new User(1, "Kenneth", new Date(), "pass1", "991231-1111111"));
-		users.add(new User(2, "Alice", new Date(), "pass2", "881231-1111111"));
-		users.add(new User(3, "Elena", new Date(), "pass3", "771231-1111111"));
-	}
+//	static {
+//		users.add(new User(1, "Kenneth", new Date(), "pass1", "991231-1111111"));
+//		users.add(new User(2, "Alice", new Date(), "pass2", "881231-1111111"));
+//		users.add(new User(3, "Elena", new Date(), "pass3", "771231-1111111"));
+//	}
 
 	public List<User> findAll() {
 		return users;
