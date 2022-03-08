@@ -1,0 +1,202 @@
+From de7bdf9e9472d129c655974f60e78c2b946d35ed Mon Sep 17 00:00:00 2001
+From: mjhan <mymyeong@gmail.com>
+Date: Thu, 10 Mar 2022 15:33:42 +0900
+Subject: [PATCH] Revert "Spring boot test"
+
+This reverts commit bb4e9890a39e36f29cd0a007d5505b534b4a1813.
+---
+ .project                                      | 11 ---
+ SpringBootTest/pom.xml                        | 76 ++++++++++---------
+ .../com/mymyeong/springboot/user/User.java    |  2 +-
+ .../springboot/user/UserJpaController.java    |  1 +
+ .../com/mymyeong/springboot/user/UserV2.java  |  2 -
+ 5 files changed, 42 insertions(+), 50 deletions(-)
+ delete mode 100644 .project
+
+diff --git a/.project b/.project
+deleted file mode 100644
+index 04b252f..0000000
+--- a/.project
++++ /dev/null
+@@ -1,11 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<projectDescription>
+-	<name>springBoot</name>
+-	<comment></comment>
+-	<projects>
+-	</projects>
+-	<buildSpec>
+-	</buildSpec>
+-	<natures>
+-	</natures>
+-</projectDescription>
+diff --git a/SpringBootTest/pom.xml b/SpringBootTest/pom.xml
+index 6fc1085..bccba26 100644
+--- a/SpringBootTest/pom.xml
++++ b/SpringBootTest/pom.xml
+@@ -1,13 +1,12 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+-<project xmlns="http://maven.apache.org/POM/4.0.0"
+-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
++<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+ 	<modelVersion>4.0.0</modelVersion>
+ 	<parent>
+ 		<groupId>org.springframework.boot</groupId>
+ 		<artifactId>spring-boot-starter-parent</artifactId>
+ 		<version>2.6.0</version>
+-		<relativePath /> <!-- lookup parent from repository -->
++		<relativePath/> <!-- lookup parent from repository -->
+ 	</parent>
+ 	<groupId>com.mymyeong</groupId>
+ 	<artifactId>spring-boot</artifactId>
+@@ -27,11 +26,11 @@
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter-web</artifactId>
+ 		</dependency>
+-
++		
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+ 			<artifactId>spring-boot-starter-validation</artifactId>
+-		</dependency>
++		</dependency>		
+ 
+ 		<dependency>
+ 			<groupId>org.springframework.boot</groupId>
+@@ -54,51 +53,56 @@
+ 			<artifactId>spring-boot-starter-test</artifactId>
+ 			<scope>test</scope>
+ 		</dependency>
+-
++		
+ 		<dependency>
+ 			<groupId>com.fasterxml.jackson.dataformat</groupId>
+ 			<artifactId>jackson-dataformat-xml</artifactId>
+ 		</dependency>
+-
++		
+ 		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-hateoas</artifactId>
++		    <groupId>org.springframework.boot</groupId>
++		    <artifactId>spring-boot-starter-hateoas</artifactId>
++	    </dependency>
++	    
++   		<dependency>
++		    <groupId>org.springframework.boot</groupId>
++		    <artifactId>spring-boot-starter-actuator</artifactId>
+ 		</dependency>
+-
++		
+ 		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-actuator</artifactId>
++		    <groupId>org.springframework.boot</groupId>
++		    <artifactId>spring-boot-starter-security</artifactId>
++	    </dependency>
++	    
++   		<dependency>
++		    <groupId>org.springframework.boot</groupId>
++		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+ 		</dependency>
+-
+-		<dependency>
+-			<groupId>org.springframework.boot</groupId>
+-			<artifactId>spring-boot-starter-security</artifactId>
++	    
++	    <dependency>
++		    <groupId>io.springfox</groupId>
++		    <artifactId>springfox-swagger2</artifactId>
++		    <version>3.0.0</version>
+ 		</dependency>
+-
+-		<dependency>
+-			<groupId>io.springfox</groupId>
+-			<artifactId>springfox-swagger2</artifactId>
+-			<version>3.0.0</version>
++		
++ 		<dependency>
++		    <groupId>io.springfox</groupId>
++		    <artifactId>springfox-boot-starter</artifactId>
++		    <version>3.0.0</version>
+ 		</dependency>
+-
+-		<dependency>
+-			<groupId>io.springfox</groupId>
+-			<artifactId>springfox-boot-starter</artifactId>
+-			<version>3.0.0</version>
+-		</dependency>
+-
++		
+ 		<dependency>
+-			<groupId>org.springframework.data</groupId>
+-			<artifactId>spring-data-rest-hal-browser</artifactId>
+-			<version>3.3.9.RELEASE</version>
++		    <groupId>org.springframework.data</groupId>
++		    <artifactId>spring-data-rest-hal-browser</artifactId>
++		    <version>3.3.9.RELEASE</version>
+ 		</dependency>
+-
++		
+ 		<dependency>
+-			<groupId>com.h2database</groupId>
+-			<artifactId>h2</artifactId>
+-			<scope>runtime</scope>
++		    <groupId>com.h2database</groupId>
++		    <artifactId>h2</artifactId>
++		    <scope>runtime</scope>
+ 		</dependency>
+-
++				
+ 	</dependencies>
+ 
+ 	<build>
+diff --git a/SpringBootTest/src/main/java/com/mymyeong/springboot/user/User.java b/SpringBootTest/src/main/java/com/mymyeong/springboot/user/User.java
+index 593ae43..c55acc3 100644
+--- a/SpringBootTest/src/main/java/com/mymyeong/springboot/user/User.java
++++ b/SpringBootTest/src/main/java/com/mymyeong/springboot/user/User.java
+@@ -44,6 +44,6 @@ public class User {
+ 	@ApiModelProperty(notes = "사용자 생년월일")
+ 	private String ssn;
+ 
+-	@OneToMany(mappedBy = "user")
++	@OneToMany(mappedBy =  "user")
+ 	private List<Post> post;
+ }
+\ No newline at end of file
+diff --git a/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserJpaController.java b/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserJpaController.java
+index 25225ce..5266ad8 100644
+--- a/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserJpaController.java
++++ b/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserJpaController.java
+@@ -6,6 +6,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+ import java.net.URI;
+ import java.util.List;
+ 
++import javax.persistence.PostRemove;
+ import javax.validation.Valid;
+ 
+ import org.springframework.beans.factory.annotation.Autowired;
+diff --git a/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserV2.java b/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserV2.java
+index 0bdc7b2..59359b8 100644
+--- a/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserV2.java
++++ b/SpringBootTest/src/main/java/com/mymyeong/springboot/user/UserV2.java
+@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFilter;
+ 
+ import lombok.AllArgsConstructor;
+ import lombok.Data;
+-import lombok.EqualsAndHashCode;
+ import lombok.NoArgsConstructor;
+ 
+ @Data
+@@ -12,7 +11,6 @@ import lombok.NoArgsConstructor;
+ @NoArgsConstructor
+ //@JsonIgnoreProperties(value = { "passwd" })
+ @JsonFilter("UserInfoV2")
+-@EqualsAndHashCode(callSuper=false)
+ public class UserV2 extends User {
+ 
+ 	private String grade;
+-- 
+2.24.0.windows.2
+

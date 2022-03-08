@@ -1,12 +1,10 @@
 package com.mymyeong.springboot.user;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
@@ -24,7 +22,7 @@ import lombok.NoArgsConstructor;
 @ApiModel(description = "사용자 상세 정보를 위한 도메인 객체")
 @Entity
 public class User {
-
+	
 	@Id
 	@GeneratedValue
 	private Integer id;
@@ -43,7 +41,4 @@ public class User {
 //	@JsonIgnore
 	@ApiModelProperty(notes = "사용자 생년월일")
 	private String ssn;
-
-	@OneToMany(mappedBy =  "user")
-	private List<Post> post;
 }
