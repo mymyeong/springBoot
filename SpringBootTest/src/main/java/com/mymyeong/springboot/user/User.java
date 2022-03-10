@@ -44,6 +44,6 @@ public class User {
 	@ApiModelProperty(notes = "사용자 생년월일")
 	private String ssn;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy =  "user")
 	private List<Post> post;
 }
